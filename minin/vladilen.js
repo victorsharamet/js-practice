@@ -936,14 +936,39 @@ function lastVisit(user) {
 }
 
 console.log(lastVisit(users[1]))
-// push to github
 
 
+// Урок 18. Шаблоны проектирования
 
+// constructor
+function Server(name, ip) { // функция как класс (заглавная), сможем поэтому применть оператор New. Является конструктором
+	this.name = name
+	this.ip = ip
+}
 
+Server.prototype.getUrl = function() { // создали класс с расширенным прототипом
+	return `https://${this.ip}:80`
+}
 
+const aws = new Server('AWS German', '82.21.21.32')
+console.log(aws.getUrl()) // создаем инстанс данного класса
 
+// формат записи сегодня
+class Server {
+	constructor(name, ip) {
+		this.name = name
+		this.ip = ip
+	}
 
+	getUrl() {
+		return `https://${this.ip}:80`
+	}
+}
+
+const aws = new Server('AWS German', '82.21.21.32')
+console.log(aws.getUrl())
+
+// factory
 
 
 
