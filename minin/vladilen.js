@@ -940,7 +940,7 @@ console.log(lastVisit(users[1]))
 
 // Урок 18. Шаблоны проектирования
 
-// constructor
+// 1. Constructor (creational)
 function Server(name, ip) { // функция как класс (заглавная), сможем поэтому применть оператор New. Является конструктором
 	this.name = name
 	this.ip = ip
@@ -968,14 +968,104 @@ class Server {
 const aws = new Server('AWS German', '82.21.21.32')
 console.log(aws.getUrl())
 
-// factory
+// 2. Factory (creational)
+class SimpleMembership {
+	constructor(name) {
+		this.name = name
+		this.cost = 50
+	}
+}
 
+class StandardMembership {
+	constructor(name) {
+		this.name = name
+		this.cost = 150
+	}
+}
 
+class PremiumMembership {
+	constructor(name) {
+		this.name = name
+		this.cost = 500
+	}
+}
 
+class MemberFactory {
+	static list = {
+		simple: SimpleMembership,
+		standard: StandardMembership,
+		premium: PremiumMembership
+	}
 
+	create(name, type = 'simple') {
+		const Membership = MemberFactory.list[type] || MemberFactory.list.simple
+		const member = new Membership(name)
+		member.type = type
+		member.define = function() {
+			console.log(`${this.name} (${this.type}): ${this.cost}`)
+		}
+		return member 
+	}
+}
 
+const factory = new MemberFactory()
 
+const members = [
+	factory.create('Vladilen', 'simple'),
+	factory.create('Elena', 'premium'),
+	factory.create('Vasilisa', 'standard'),
+	factory.create('Ivan', 'premium'),
+	factory.create('Petr')
+]
 
+console.log(members)
 
+members.forEach( m => {
+	m.define()
+})
+
+// 3. Prototype (creational)
+const car = {
+	wheels: 4,
+
+	init() {
+		console.log(`У меня есть ${this.wheels} колеса, мой владелец ${this.owner}`)
+	}
+}
+
+const carWithOwner = Object.create(car, {
+	owner: {
+		value: 'Дмитрий'
+	}
+})
+
+console.log(carWithOwner.__proto__ === car)
+
+carWithOwner.init()
+
+// 4. Singleton (creational)
+class Database {
+	constructor(data) {
+		if (Database.exists) {
+			return Database.instance
+		}
+		Database.instance = this // контекст именно этого класса
+		Database.exists = true
+		this.data = data
+	}
+
+	getData() {
+		return this.data
+	}
+}
+
+const mongo = new Database('MongoDB')
+console.log(mongo.getData())
+
+const mysql = new Database('MySQL')
+console.log(mongo.getData())
+
+// 5. Adapter (structural)
+// 29:25 github push
 
 
