@@ -1066,6 +1066,19 @@ const mysql = new Database('MySQL')
 console.log(mongo.getData())
 
 // 5. Adapter (structural)
-// 29:25 github push
+// start random meow function
+function meow() {
+	return "Meow!";
+}
+
+let time = 10;
+let sound;
+
+if (time >= 6) {
+	sound = meow();
+	console.log(sound);
+}
+// end random meow function
+
 
 
