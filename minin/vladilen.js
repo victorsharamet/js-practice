@@ -1066,19 +1066,91 @@ const mysql = new Database('MySQL')
 console.log(mongo.getData())
 
 // 5. Adapter (structural)
-// start random meow function
-function meow() {
-	return "Meow!";
+// 29:04
+class OldCalc {
+	operations (t1, t2, operation) {
+		switch (operation) {
+			case 'add': return t1 + t2
+			case 'sub': return t1 - t2
+			default: return NaN
+		}
+	}
 }
 
-let time = 10;
-let sound;
+class NewCalc {
+	add (t1, t2) {
+		return t1 + t2
+	}
 
-if (time >= 6) {
-	sound = meow();
-	console.log(sound);
+	sub (t1, t2) {
+		return t1 - t2
+	}
 }
-// end random meow function
+
+class CalcAdapter {
+	constructor() {
+		this.calc = new NewCalc()
+	}
+
+	operations (t1, t2, operation) {
+		switch (operation) {
+			case 'add': return t1 + t2
+			case 'sub': return t1 - t2
+			default: return NaN
+	}
+}
+
+const oldCalc = new OldCalc()
+console.log(oldCalc.operations(10, 5, 'add'))
+
+const newCalc = new NewCalc()
+console.log(newCalc.add(10, 5))
+
+const adapter = new CalcAdapter()
+console.log(adapter.operations(25, 10, 'sub'))
+// 35:39
+
+// 6. Decorator design pattern (structural)
+class Server {
+	constructor(ip, port) {
+		this.ip = ip
+		this.port = port
+	}
+
+	get url() {
+		return `https://${this.ip}:${this.port}`
+	}
+}
+
+function aws(server) {
+	server.isAWS = true
+	server.awsInfo = function() {
+		return server.url // getter
+	}
+	return server
+}
+
+function azure(server) {
+	server.isAzure = true
+	server.port += 500
+	return server
+}
+
+const s1 = aws(new Server('12.34.56.78', 8080))
+console.log(s1.isAWS)
+console.log(s1.awsInfo())
+
+const s2 = azure(new Server('98.87.76.12', 1000))
+console.log(s2.isAzure)
+console.log(s2.url)
+// 41:26
+
+// 7. facade
+
+
+
+
+
 
 
 
