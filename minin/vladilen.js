@@ -1232,3 +1232,28 @@ const bmwX3 = factory.create('bmw', 8000)
 
 console.log(bmwX3 === bmwX6);
 // 57:08
+
+// 9. Proxy
+// позволяет ставить ловушки на поля объектов, на вызов функции
+// избавление от лишних запросов на сервер - как пример
+function networkFetch(url) {
+	return `${url} - Ответ от сервера`
+}
+
+const cache = new Set()
+const proxiedFetch = new Proxy(networkFetch, {
+	apply(target, thisArg, args) {
+		const url = args[0]
+		if (cache.has(url)) {
+			return `${url} - Ответ из кеша`
+		} else {
+			cache.add(url)
+			return Reflect.apply(target, thisArg, args)
+		}
+	}
+})
+
+console.log(proxiedFetch('angular.io'))
+console.log(proxiedFetch('react.io'))
+console.log(proxiedFetch('angular.io'))
+// 1:02:41
