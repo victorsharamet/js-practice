@@ -1253,7 +1253,7 @@ const proxiedFetch = new Proxy(networkFetch, {
 	}
 })
 
-console.log(proxiedFetch('angular.io'))
-console.log(proxiedFetch('react.io'))
-console.log(proxiedFetch('angular.io'))
+console.log(proxiedFetch('angular.io')) // ответ от сервера
+console.log(proxiedFetch('react.io')) // ответ от сервера
+console.log(proxiedFetch('angular.io')) // ответ из кэша
 // 1:02:41
