@@ -1145,7 +1145,7 @@ console.log(s2.isAzure)
 console.log(s2.url)
 // 41:26
 
-// 7. facade
+// 7. Facade
 class Complaints {
 	constructor() {
 		this.complaints = []
@@ -1191,3 +1191,44 @@ const registry = new ComplaintRegistry()
 console.log(registry.register('Vladilen', 'service', 'недоступен'))
 console.log(registry.register('Elena', 'product', 'вылазит ошибка'))
 // 50:37
+
+// 8. Flyweight
+// служит для эффективной передачи данных через различные типы объектов
+// загрузка изображений в браузерах - паттерн используется, чтобы не загружать изображение дважды
+// кеширование, сохранение в памяти и прочее
+class Car {
+	constructor(model, price) {
+		this.model = model
+		this.price = price
+	}
+}
+
+class CarFactory {
+	constructor() {
+		this.cars = []
+	}
+
+	create(model, price) {
+		const candidate = this.getCar(model)
+		if (candidate) {
+			return candidate
+		}
+
+		const newCar = new Car(model ,price)
+		this.cars.push(newCar)
+		return newCar
+	}
+
+	getCar(model) {
+		return this.cars.find(car => car.model === model)
+	}
+}
+
+const factory = new CarFactory()
+
+const bmwX6 = factory.create('bmw', 10000)
+const audi = factory.create('audi', 12000)
+const bmwX3 = factory.create('bmw', 8000)
+
+console.log(bmwX3 === bmwX6);
+// 57:08
