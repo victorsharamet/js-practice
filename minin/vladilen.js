@@ -1256,4 +1256,24 @@ const proxiedFetch = new Proxy(networkFetch, {
 console.log(proxiedFetch('angular.io')) // ответ от сервера
 console.log(proxiedFetch('react.io')) // ответ от сервера
 console.log(proxiedFetch('angular.io')) // ответ из кэша
-// 1:02:41
+
+// 10. Chain of responsibility (Behaviour)
+// позволяет последовательно у одного и того же объекта вызывать какой-то набор операций
+// и последовательно их модифицировать - библиотеке jQuery в пример
+
+class MySum {
+	constructor(initialValue = 42) {
+		this.sum = initialValue
+	}
+
+	add(value) {
+		this.sum += value
+		return this
+	}
+}
+
+const sum1 = new MySum()
+console.log(sum1.add(8).add(10).add(1).add(9).sum)
+
+const sum2 = new MySum(0)
+console.log(sum2.add(1).add(2).add(3).sum)
