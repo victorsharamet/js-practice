@@ -1547,3 +1547,14 @@ class TrafficLight {
 		return this.current.sign()
 	}
 }
+
+const traffic = new TrafficLight()
+console.log(traffic.sign())
+traffic.change()
+
+console.log(traffic.sign())
+traffic.change()
+
+console.log(traffic.sign())
+traffic.change()
+// 1:43:38
