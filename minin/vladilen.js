@@ -1421,7 +1421,7 @@ lena.send('Hello hello!', vlad)
 igor.send('Vsem privet')
 // 1:25:58
 
-// Observer OR Publisher Subscriber OR Despatcher OR Listener
+// 14. Observer OR Publisher Subscriber OR Despatcher OR Listener
 // Формирует зависимости типа "один ко многим" - one to many dependencies
 // У нас есть объект, у которого мы можем стриггерить вызов изменений
 // Все объекты, подписанные на эти изменения, получают эти обновления и делают свой функционал
@@ -1485,4 +1485,65 @@ console.log(obs1.state)
 console.log(obs2.state)
 // 1:36:12
 
-// 
+// 15. State
+class Light {
+	constructor(light) {
+		this.light = light
+	}
+}
+
+class RedLight extends Light {
+	constructor() {
+		super('red')
+	}
+
+	sign() {
+		return 'СТОП!'
+	}
+}
+
+class YellowLight extends Light {
+	constructor() {
+		super('yellow')
+	}
+
+	sign() {
+		return 'ГОТОВЬСЯ!'
+	}
+}
+
+class GreenLight extends Light {
+	constructor() {
+		super('green')
+	}
+
+	sign() {
+		return 'ЕДЬ!'
+	}
+}
+
+class TrafficLight {
+	constructor() {
+		this.states = [
+			new RedLight,
+			new YellowLight,
+			new GreenLight
+		]
+		this.current = this.states[0]
+	}
+
+	change() {
+		const total = this.states.length
+		let index = this.states.findIndex(light => light === this.current)
+
+		if (index + 1 < total) {
+			this.current = this.states[index + 1]
+		} else {
+			this.current = this.states[0]
+		}
+	}
+
+	sign() {
+		return this.current.sign()
+	}
+}
